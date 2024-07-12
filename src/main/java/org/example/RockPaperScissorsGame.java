@@ -1,9 +1,8 @@
 package org.example;
 
-import de.vandermeer.asciitable.AsciiTable;
 import java.util.Random;
 import java.util.Scanner;
-// Main game class
+
 public class RockPaperScissorsGame {
     private String[] moves = {"Rock", "Spock", "Paper", "Lizard", "Scissors"};
     private Random random = new Random();
@@ -16,6 +15,7 @@ public class RockPaperScissorsGame {
             String computerMove = getComputerMove();
             String hmac = crypto.calculateHMAC(computerMove);
             System.out.println("HMAC: " + hmac);
+
             String playerMove = getPlayerMove();
 
             if (playerMove.equals("?")) {
@@ -26,12 +26,20 @@ public class RockPaperScissorsGame {
                 break;
             }
 
-            computerMove = getComputerMove();
+            playerMove = moveToString(playerMove);
+
             System.out.println("Your move: " + playerMove);
             System.out.println("Computer move: " + computerMove);
 
             String result = winnerDeterminer.determineWinner(playerMove, computerMove);
             System.out.println(result);
+            System.out.println("HMAC key: " + crypto.getKey());
+
+            System.out.println("Play again? (y/n)");
+            String playAgain = scanner.nextLine();
+            if (!playAgain.equalsIgnoreCase("y")) {
+                break;
+            }
         }
         scanner.close();
     }
@@ -86,4 +94,6 @@ public class RockPaperScissorsGame {
                 return "Invalid move";
         }
     }
+
+
 }

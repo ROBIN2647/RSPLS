@@ -8,7 +8,7 @@ public class GameTable {
     public static String generateResultTable() {
         AsciiTable table = new AsciiTable();
         table.addRule();
-        table.addRow("PC/User", "Rock", "Spock", "Paper", "Lizard", "Scissors");
+        table.addRow("v PC/User >", "Rock", "Spock", "Paper", "Lizard", "Scissors");
         table.addRule();
         table.addRow("Rock", "Draw", "Lose", "Win", "Win", "Lose");
         table.addRule();
@@ -23,4 +23,3 @@ public class GameTable {
         return table.render();
     }
 }
-

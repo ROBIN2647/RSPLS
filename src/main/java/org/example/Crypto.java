@@ -46,4 +46,3 @@ public class Crypto {
         return hexString.toString();
     }
 }
-
