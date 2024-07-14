@@ -3,23 +3,42 @@ package org.example;
 import de.vandermeer.asciitable.AsciiTable;
 
 public class GameTable {
-    private static final String[] MOVES = {"Rock", "Spock", "Paper", "Lizard", "Scissors"};
-
-    public static String generateResultTable() {
+    public static String generateResultTable(String[] moves) {
         AsciiTable table = new AsciiTable();
         table.addRule();
-        table.addRow("v PC/User >", "Rock", "Spock", "Paper", "Lizard", "Scissors");
+        String[] headerRow = new String[moves.length + 1];
+        headerRow[0] = "PC/User >";
+        System.arraycopy(moves, 0, headerRow, 1, moves.length);
+        table.addRow(headerRow);
         table.addRule();
-        table.addRow("Rock", "Draw", "Lose", "Win", "Win", "Lose");
-        table.addRule();
-        table.addRow("Spock", "Win", "Draw", "Lose", "Lose", "Win");
-        table.addRule();
-        table.addRow("Paper", "Lose", "Win", "Draw", "Win", "Lose");
-        table.addRule();
-        table.addRow("Lizard", "Lose", "Win", "Lose", "Draw", "Win");
-        table.addRule();
-        table.addRow("Scissors", "Win", "Lose", "Win", "Lose", "Draw");
-        table.addRule();
+
+        for (String move : moves) {
+            String[] row = new String[moves.length + 1];
+            row[0] = move;
+            for (int i = 0; i < moves.length; i++) {
+                String result = determineResult(move, moves[i]);
+                row[i + 1] = result;
+            }
+            table.addRow(row);
+            table.addRule();
+        }
+
         return table.render();
+    }
+
+    private static String determineResult(String move1, String move2) {
+        if (move1.equals(move2)) {
+            return "Draw";
+        } else if (
+                (move1.equals("Rock") && (move2.equals("Scissors") || move2.equals("Lizard"))) ||
+                        (move1.equals("Spock") && (move2.equals("Rock") || move2.equals("Scissors"))) ||
+                        (move1.equals("Paper") && (move2.equals("Spock") || move2.equals("Lizard"))) ||
+                        (move1.equals("Lizard") && (move2.equals("Paper") || move2.equals("Spock"))) ||
+                        (move1.equals("Scissors") && (move2.equals("Paper") || move2.equals("Lizard")))
+        ) {
+            return "Win";
+        } else {
+            return "Lose";
+        }
     }
 }

@@ -1,6 +1,6 @@
 package org.example;
 
-class WinnerDeterminer {
+public class WinnerDeterminer {
     public String determineWinner(String playerMove, String computerMove) {
         if (playerMove.equals(computerMove)) {
             return "It's a draw!";

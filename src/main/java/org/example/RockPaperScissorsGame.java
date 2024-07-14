@@ -4,11 +4,15 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class RockPaperScissorsGame {
-    private String[] moves = {"Rock", "Spock", "Paper", "Lizard", "Scissors"};
+    private String[] moves;
     private Random random = new Random();
     private Scanner scanner = new Scanner(System.in);
     private WinnerDeterminer winnerDeterminer = new WinnerDeterminer();
     private Crypto crypto = new Crypto();
+
+    public RockPaperScissorsGame(String[] moves) {
+        this.moves = moves;
+    }
 
     public void play() {
         while (true) {
@@ -19,7 +23,7 @@ public class RockPaperScissorsGame {
             String playerMove = getPlayerMove();
 
             if (playerMove.equals("?")) {
-                System.out.println(GameTable.generateResultTable());
+                System.out.println(GameTable.generateResultTable(moves));
                 continue;
             } else if (playerMove.equals("0")) {
                 System.out.println("Thanks for playing!");
@@ -79,19 +83,11 @@ public class RockPaperScissorsGame {
     }
 
     private String moveToString(String move) {
-        switch (move) {
-            case "1":
-                return "Rock";
-            case "2":
-                return "Spock";
-            case "3":
-                return "Paper";
-            case "4":
-                return "Lizard";
-            case "5":
-                return "Scissors";
-            default:
-                return "Invalid move";
+        try {
+            int index = Integer.parseInt(move) - 1;
+            return moves[index];
+        } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
+            return "Invalid move";
         }
     }
 
